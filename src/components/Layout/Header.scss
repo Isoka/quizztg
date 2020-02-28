@@ -1,0 +1,20 @@
+@import '../../styles/vars';
+
+header {
+  background-color: $couleur-principale;
+  height: 6em;
+  padding: 2em;
+  color: #ffffff;
+
+  & img {
+    height: 75px;
+    width: auto;
+    float: left;
+    margin-top: -1em;
+  }
+
+  & .menu {
+    margin-top: -0.2em;
+    float: right;
+  }
+}

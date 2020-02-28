@@ -8,7 +8,21 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={
+ *        "security"="is_granted('ROLE_USER')",
+ *        "normalization_context"={"groups"={"equ_get"}}
+ *     },
+ *     collectionOperations={
+ *         "get",
+ *         "post"={"security"="is_granted('ROLE_ADMIN')"}
+ *     },
+ *     itemOperations={
+ *         "get",
+ *         "put"={"security"="is_granted('ROLE_ADMIN')"},
+ *     }
+ * )
+ * 
  * @ORM\Entity(repositoryClass="App\Repository\EquipeRepository")
  */
 class Equipe
@@ -29,6 +43,12 @@ class Equipe
      * @ORM\OneToMany(targetEntity="App\Entity\Tournee", mappedBy="equipe")
      */
     private $tournees;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etablissement", inversedBy="equipes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $etablissement;
 
     public function __construct()
     {
@@ -79,6 +99,18 @@ class Equipe
                 $tournee->setEquipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEtablissement(): ?Etablissement
+    {
+        return $this->etablissement;
+    }
+
+    public function setEtablissement(Etablissement $etablissement): self
+    {
+        $this->etablissement = $etablissement;
 
         return $this;
     }

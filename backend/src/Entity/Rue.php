@@ -6,7 +6,21 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={
+ *        "security"="is_granted('ROLE_USER')",
+ *        "normalization_context"={"groups"={"rue_get"}}
+ *     },
+ *     collectionOperations={
+ *         "get",
+ *         "post"={"security"="is_granted('ROLE_ADMIN')"}
+ *     },
+ *     itemOperations={
+ *         "get",
+ *         "put"={"security"="is_granted('ROLE_ADMIN')"},
+ *     }
+ * )
+ * 
  * @ORM\Entity(repositoryClass="App\Repository\RueRepository")
  */
 class Rue

@@ -45,6 +45,8 @@
   },
   "dependencies": {
     "axios": "^0.19.1",
+    "mini-css-extract-plugin": "*",
+    "node-sass": "*",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -52,8 +54,8 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
-    "mini-css-extract-plugin": "*",
-    "node-sass": "*",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
     "uglifyjs-webpack-plugin": "*"
   }
 }

@@ -8,7 +8,21 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={
+ *        "security"="is_granted('ROLE_USER')",
+ *        "normalization_context"={"groups"={"tou_get"}}
+ *     },
+ *     collectionOperations={
+ *         "get",
+ *         "post"={"security"="is_granted('ROLE_ADMIN')"}
+ *     },
+ *     itemOperations={
+ *         "get",
+ *         "put"={"security"="is_granted('ROLE_ADMIN')"},
+ *     }
+ * )
+ * 
  * @ORM\Entity(repositoryClass="App\Repository\TourneeRepository")
  */
 class Tournee
