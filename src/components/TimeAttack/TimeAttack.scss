@@ -1,0 +1,22 @@
+.rule-list {
+  font-size: 0.8em;
+  text-align: left;
+  list-style-type: disc;
+}
+
+.ready {
+  padding: 2em;
+}
+
+.question {
+  width: 500px;
+  height: auto;
+  padding: 25px;
+  border-radius: 8px;
+  margin: 0 auto;
+  text-align: center;
+
+  & .question-number {
+    font-size: 1.5em;
+  }
+}

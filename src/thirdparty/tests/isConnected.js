@@ -20,6 +20,5 @@ export default function isConnected() {
       console.info('[isConnected] Token doesn\'t need to be refreshed');
       return true;
     });
-  
   return true;
 }

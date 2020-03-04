@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
  *     attributes={
  *        "security"="is_granted('ROLE_USER')",
- *        "normalization_context"={"groups"={"rue_get"}}
+ *        "normalization_context"={"groups"={"rue:read"}}
  *     },
  *     collectionOperations={
  *         "get",
@@ -29,17 +30,20 @@ class Rue
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"rue:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"rue:read"})
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tournee", inversedBy="rues")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"rue:read"})
      */
     private $tournee;
 

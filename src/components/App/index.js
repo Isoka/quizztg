@@ -12,6 +12,8 @@ import Header from 'src/containers/Header';
 import Footer from 'src/components/Layout/Footer';
 import Homepage from 'src/containers/Homepage';
 import BestScores from 'src/components/BestScores';
+import TimeAttack from 'src/containers/TimeAttack/TimeAttack';
+import Entry from 'src/components/Entry';
 
 // == Composant
 const App = () => (
@@ -21,13 +23,16 @@ const App = () => (
       <main>
         <Switch>
           <Route exact path="/">
-            <Homepage />
+            <Entry Component={Homepage} />
           </Route>
           <Route path="/quizz">
-            <Homepage />
+            <Entry Component={Homepage} />
           </Route>
           <Route path="/bestscores">
-            <BestScores />
+            <Entry Component={BestScores} />
+          </Route>
+          <Route path="/timeattack">
+            <Entry Component={TimeAttack} />
           </Route>
         </Switch>
       </main>

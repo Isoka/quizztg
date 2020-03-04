@@ -6,12 +6,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
  *     attributes={
  *        "security"="is_granted('ROLE_USER')",
- *        "normalization_context"={"groups"={"tou_get"}}
+ *        "normalization_context"={"groups"={"tournee:read"}}
  *     },
  *     collectionOperations={
  *         "get",
@@ -31,11 +32,13 @@ class Tournee
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"tournee:read", "rue:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"tournee:read", "rue:read"})
      */
     private $name;
 

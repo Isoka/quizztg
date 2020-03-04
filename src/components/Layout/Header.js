@@ -12,13 +12,10 @@ const Header = (props) => {
 
   return (
     <header>
-      <img src="src/thirdparty/img/logolp.png" alt="logo" />
+      <Link to="/">
+        <img src="src/thirdparty/img/logolp.png" alt="logo" />
+      </Link>
       <Menu>
-        <Menu.Item
-          name="accueil"
-        >
-          <Link to="/">Accueil</Link>
-        </Menu.Item>
         <Menu.Item
           name="Meilleurs scores"
         >

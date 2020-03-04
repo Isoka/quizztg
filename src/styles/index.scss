@@ -4,3 +4,15 @@
 body {
   font-family: sans-serif;
 }
+
+body a {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+body a:hover {
+  color: $couleur-principale;
+}
+
+.ui.container {
+  padding: 1em;
+}
