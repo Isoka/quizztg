@@ -2,32 +2,23 @@ import { connect } from 'react-redux';
 
 import TimeAttack from 'src/components/TimeAttack';
 import {
-  startChrono,
-  endChrono,
-  calcTimeFromChrono,
-  resetChrono,
   startTimeAttack,
   stopTimeAttack,
-  setRues,
+  resetQuestions,
+  resetIncrement,
+  resetChrono,
 } from 'src/store/reducer';
 
 const mapStateToProps = (state) => ({
-  startTime: state.startTime !== undefined ? state.startTime : null,
-  endTime: state.endTime !== undefined ? state.endTime : null,
-  finalTime: state.finalTime !== undefined ? state.finalTime : null,
   timeAttackStarted: state.timeAttackStarted !== undefined ? state.timeAttackStarted : false,
-  rues: state.rues !== undefined ? state.rues : null,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  startChrono: () => {
-    dispatch(startChrono());
+  resetQuestions: () => {
+    dispatch(resetQuestions());
   },
-  endChrono: () => {
-    dispatch(endChrono());
-  },
-  calcTimeFromChrono: (startTime, endTime) => {
-    dispatch(calcTimeFromChrono(startTime, endTime));
+  resetIncrement: () => {
+    dispatch(resetIncrement());
   },
   resetChrono: () => {
     dispatch(resetChrono());
@@ -37,9 +28,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   stopTimeAttack: () => {
     dispatch(stopTimeAttack());
-  },
-  setRues: (rues) => {
-    dispatch(setRues(rues));
   },
 });
 

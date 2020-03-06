@@ -3,15 +3,23 @@ import PropTypes from 'prop-types';
 
 import './TimeAttack.scss';
 // eslint-disable-next-line import/no-cycle
-import TimeAttackGame from 'src/containers/TimeAttack/TimeAttackGame';
+import Game from 'src/containers/TimeAttack/Game';
 import Rules from 'src/components/TimeAttack/Rules';
 
 const TimeAttack = (props) => {
   const {
     timeAttackStarted,
     startTimeAttack,
-    rues,
+    resetQuestions,
+    resetIncrement,
+    resetChrono,
   } = props;
+
+  if (timeAttackStarted === false) {
+    resetQuestions();
+    resetIncrement();
+    resetChrono();
+  }
 
   return (
     <div className="game">
@@ -19,10 +27,7 @@ const TimeAttack = (props) => {
         <Rules startTimeAttack={startTimeAttack} />
       )
         : (
-          <TimeAttackGame
-            token={localStorage.getItem('token')}
-            rues={rues}
-          />
+          <Game nbOfQuestions={20} type="timeattack" />
         )}
     </div>
   );
@@ -31,13 +36,17 @@ const TimeAttack = (props) => {
 TimeAttack.defaultProps = {
   timeAttackStarted: null,
   startTimeAttack: null,
-  rues: null,
+  resetQuestions: null,
+  resetIncrement: null,
+  resetChrono: null,
 };
 
 TimeAttack.propTypes = {
   timeAttackStarted: PropTypes.bool,
   startTimeAttack: PropTypes.func,
-  rues: PropTypes.array,
+  resetQuestions: PropTypes.func,
+  resetIncrement: PropTypes.func,
+  resetChrono: PropTypes.func,
 };
 
 export default TimeAttack;

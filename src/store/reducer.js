@@ -5,26 +5,26 @@ const initialState = {
   message: null,
   goodAnswers: 0,
   badAnswers: [],
+  questions: [],
 };
 // == Types
 const TOGGLE_LATERAL_MENU = 'TOGGLE_LATERAL_MENU';
 const CONTROLE_CHAMP = 'CONTROLE_CHAMP';
 const START_CHRONO = 'START_CHRONO';
+const RESET_CHRONO = 'RESET_CHRONO';
 const CHECK_AUTHENTICATE = 'CHECK_AUTHENTICATE';
 const SET_ERROR = 'SET_ERROR';
 const DELETE_ERROR = 'DELETE_ERROR';
-const END_CHRONO = 'END_CHRONO';
-const CALC_TIME_FROM_CHRONO = 'CALC_TIME_FROM_CHRONO';
-const RESET_CHRONO = 'RESET_CHRONO';
 const TIME_ATTACK_START = 'TIME_ATTACK_START';
 const TIME_ATTACK_STOP = 'TIME_ATTACK_STOP';
-const SET_RUES = 'SET_RUES';
-const RESET_RUES = 'RESET_RUES';
 const SET_QUESTIONS = 'SET_QUESTIONS';
 const RESET_QUESTIONS = 'RESET_QUESTIONS';
 const INCREMENT = 'INCREMENT';
 const GOOD_ANSWER = 'GOOD_ANSWER';
 const BAD_ANSWER = 'BAD_ANSWER';
+const RESET_BAD_ANSWER = 'RESET_BAD_ANSWER';
+const RELOAD = 'RELOAD';
+const RESET_INCREMENT = 'RESET_INCREMENT';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -57,24 +57,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         startTime: action.startTime,
-        endTime: 0,
-        finalTime: 0,
-      };
-    case END_CHRONO:
-      return {
-        ...state,
-        endTime: action.endTime,
-      };
-    case CALC_TIME_FROM_CHRONO:
-      return {
-        ...state,
-        finalTime: Math.floor((state.endTime - state.startTime) / 1000),
       };
     case RESET_CHRONO:
       return {
         ...state,
-        startTime: null,
-        endTime: null,
+        startTime: action.startTime,
       };
     case TIME_ATTACK_START:
       return {
@@ -86,16 +73,6 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         timeAttackStarted: false,
       };
-    case SET_RUES:
-      return {
-        ...state,
-        rues: action.rues,
-      };
-    case RESET_RUES:
-      return {
-        ...state,
-        rues: null,
-      };
     case SET_QUESTIONS:
       return {
         ...state,
@@ -104,12 +81,17 @@ const reducer = (state = initialState, action = {}) => {
     case RESET_QUESTIONS:
       return {
         ...state,
-        questions: null,
+        questions: [],
       };
     case INCREMENT:
       return {
         ...state,
         iteration: action.iteration + 1,
+      };
+    case RESET_INCREMENT:
+      return {
+        ...state,
+        iteration: 0,
       };
     case GOOD_ANSWER:
       return {
@@ -119,7 +101,17 @@ const reducer = (state = initialState, action = {}) => {
     case BAD_ANSWER:
       return {
         ...state,
-        badAnswers: action.badAnswer,
+        badAnswers: action.badAnswers,
+      };
+    case RESET_BAD_ANSWER:
+      return {
+        ...state,
+        badAnswers: action.badAnswers,
+      };
+    case RELOAD:
+      return {
+        ...state,
+        reload: !state.reload,
       };
     default:
       return state;
@@ -170,22 +162,10 @@ export function startChrono() {
   };
 }
 
-export function endChrono() {
-  return {
-    type: END_CHRONO,
-    endTime: Date.now(),
-  };
-}
-
 export function resetChrono() {
   return {
     type: RESET_CHRONO,
-  };
-}
-
-export function calcTimeFromChrono() {
-  return {
-    type: CALC_TIME_FROM_CHRONO,
+    startTime: undefined,
   };
 }
 
@@ -198,19 +178,6 @@ export function startTimeAttack() {
 export function stopTimeAttack() {
   return {
     type: TIME_ATTACK_STOP,
-  };
-}
-
-export function setRues(rues) {
-  return {
-    type: SET_RUES,
-    rues,
-  };
-}
-
-export function resetRues() {
-  return {
-    type: RESET_RUES,
   };
 }
 
@@ -234,16 +201,35 @@ export function increment(iteration) {
   };
 }
 
+export function resetIncrement() {
+  return {
+    type: RESET_INCREMENT,
+  };
+}
+
 export function setGoodAnswers() {
   return {
     type: GOOD_ANSWER,
   };
 }
 
-export function setBadAnswers(badAnswer) {
+export function setBadAnswers(badAnswers) {
   return {
     type: BAD_ANSWER,
-    badAnswer,
+    badAnswers,
+  };
+}
+
+export function resetBadAnswers() {
+  return {
+    type: RESET_BAD_ANSWER,
+    badAnswers: [],
+  };
+}
+
+export function reload() {
+  return {
+    type: RELOAD,
   };
 }
 
