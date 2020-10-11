@@ -12,8 +12,8 @@ const mapDispatchToProps = (dispatch) => ({
   updateChamp: (name, value) => {
     dispatch(controlChamp(name, value));
   },
-  setError: (type, header, message) => {
-    dispatch(setError(type, header, message));
+  setError: (type, MsgHeader, message) => {
+    dispatch(setError(type, MsgHeader, message));
   },
   deleteError: () => {
     dispatch(deleteError());

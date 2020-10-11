@@ -8,7 +8,7 @@ const ShowErrors = (props) => {
   let negative = false;
   let info = false;
 
-  const { type, header, message } = props;
+  const { type, MsgHeader, message } = props;
 
   if (type === 'warning') {
     warning = true;
@@ -31,7 +31,7 @@ const ShowErrors = (props) => {
       info={info}
     >
       <Message.Header>
-        <p>{header}</p>
+        <p>{MsgHeader}</p>
       </Message.Header>
       <p>{message}</p>
     </Message>
@@ -41,13 +41,13 @@ const ShowErrors = (props) => {
 ShowErrors.defaultProps = {
   type: null,
   message: null,
-  header: null,
+  MsgHeader: null,
 };
 
 ShowErrors.propTypes = {
   type: PropTypes.string,
   message: PropTypes.string,
-  header: PropTypes.string,
+  MsgHeader: PropTypes.string,
 };
 
 export default ShowErrors;

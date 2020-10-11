@@ -52,7 +52,7 @@ const Game = (props) => {
   function handleStartGame(falseStreets) {
     Axios.get('http://back.quizztg.fr/api/rues', {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },
     })
       .then((response) => {
@@ -73,6 +73,7 @@ const Game = (props) => {
         if (badAnswers.length !== 0) {
           resetBadAnswers();
         }
+        console.log(streetsArray);
         setQuestions(streetsArray);
       });
   }
@@ -118,7 +119,7 @@ const Game = (props) => {
     <>
       <h2>Question {iteration + 1} sur {questions.length}</h2>
       <Form onSubmit={handleSubmit}>
-        <Header>{element.name}</Header>
+        <Header>{element.fullstreetname}{(element.options !== null) && " N° " + element.options}</Header>
         <Form.Field>
           <Input type="text" name="answer" id={element.id} onChange={handleChange} autoFocus />
         </Form.Field>

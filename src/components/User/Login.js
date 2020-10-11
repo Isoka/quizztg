@@ -21,22 +21,22 @@ const Login = (props) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-
     Axios.post('http://back.quizztg.fr/authentication_token', {
       email,
       password,
     })
       .then((value) => {
-        localStorage.setItem('token', value.data.token);
-        history.push('/');
+        sessionStorage.setItem('token', value.data.token);
         setError(
           'positive',
           'Connexion réussie',
-          '',
+          'Connexion réussie',
         );
         setTimeout(() => {
           deleteError();
         }, 6000);
+        history.push('/a');
+        history.push('/');
       })
       .catch((error) => {
         if (error.response !== undefined && error.response.status === 401) {
@@ -49,6 +49,16 @@ const Login = (props) => {
             deleteError();
           }, 6000);
         }
+        else if (error.response !== undefined && error.response.status === 500) {
+          setError(
+            'negative',
+            'Erreur de connexion',
+            error.response.statusText,
+          );
+          setTimeout(() => {
+            deleteError();
+          }, 6000);
+        }
       });
   }
   return (
@@ -56,8 +66,8 @@ const Login = (props) => {
       <h1>Il semblerait que vous ne soyez point connecté cher collègue... remédions à cela!</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
-          <Form.Input label="E-mail" type="email" name="email" width={8} onChange={handleChange} />
-          <Form.Input label="Mot de passe" type="password" name="password" width={8} onChange={handleChange} />
+          <Form.Input label="E-mail" type="email" name="email" width={8} required autoFocus onChange={handleChange} />
+          <Form.Input label="Mot de passe" type="password" name="password" required width={8} onChange={handleChange} />
         </Form.Group>
         <Button type="submit">Se connecter</Button>
       </Form>

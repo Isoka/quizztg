@@ -36,7 +36,6 @@ class Rue
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"rue:read"})
      */
     private $name;
 
@@ -46,6 +45,18 @@ class Rue
      * @Groups({"rue:read"})
      */
     private $tournee;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"rue:read"})
+     */
+    private $fullstreetname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"rue:read"})
+     */
+    private $options;
 
     public function getId(): ?int
     {
@@ -72,6 +83,30 @@ class Rue
     public function setTournee(?Tournee $tournee): self
     {
         $this->tournee = $tournee;
+
+        return $this;
+    }
+
+    public function getFullstreetname(): ?string
+    {
+        return $this->fullstreetname;
+    }
+
+    public function setFullstreetname(string $full_street_name): self
+    {
+        $this->fullstreetname = $fullstreetname;
+
+        return $this;
+    }
+
+    public function getOptions(): ?string
+    {
+        return $this->options;
+    }
+
+    public function setOptions(string $options): self
+    {
+        $this->options = $options;
 
         return $this;
     }

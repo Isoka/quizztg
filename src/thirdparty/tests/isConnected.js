@@ -1,24 +1,26 @@
 import Axios from 'axios';
 
 export default function isConnected() {
-  const lsToken = localStorage.getItem('token');
+  const lsToken = sessionStorage.getItem('token');
 
   if (lsToken === null || lsToken === undefined) {
     console.info('[isConnected] Token is null or undefined');
     return false;
   }
-
-  Axios.get('http://back.quizztg.fr/api/users', {
-    headers: { Authorization: `Bearer ${lsToken}` },
-  })
-    .catch((error) => {
-      localStorage.removeItem('token');
-      console.error(`[isConnected] Error: ${error}`);
-      return false;
+  if (lsToken) {
+    Axios.get('http://back.quizztg.fr/api/users', {
+      headers: { Authorization: `Bearer ${lsToken}` },
     })
-    .then(() => {
-      console.info('[isConnected] Token doesn\'t need to be refreshed');
-      return true;
-    });
+      .catch((error) => {
+        sessionStorage.removeItem('token');
+        console.error(`[isConnected] Error: ${error}`);
+        return false;
+      })
+      .then(() => {
+        console.info('[isConnected] Token doesn\'t need to be refreshed');
+        return true;
+      });
+  }
+
   return true;
 }

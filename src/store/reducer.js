@@ -140,11 +140,11 @@ export function setIsConnected(status) {
   };
 }
 
-export function setError(category, header, message) {
+export function setError(category, MsgHeader, message) {
   return {
     type: SET_ERROR,
     category,
-    header,
+    MsgHeader,
     message,
   };
 }
