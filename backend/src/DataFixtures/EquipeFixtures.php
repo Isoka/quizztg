@@ -20,6 +20,7 @@ class EquipeFixtures extends Fixture implements DependentFixtureInterface
         for($i = 1;$i <= 5;$i++) {
           $equipe = New Equipe();
           $equipe->setName("Equipe ".$i);
+          $equipe->setNumber($i);
           $equipe->setEtablissement($this->getReference('eta_toul_nord'));
           $this->addReference('eta_toul_nord_'.$i, $equipe);
 

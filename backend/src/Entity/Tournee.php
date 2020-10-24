@@ -32,18 +32,19 @@ class Tournee
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"tournee:read", "rue:read"})
+     * @Groups({"equipe:read", "tournee:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"tournee:read", "rue:read"})
+     * @Groups({"equipe:read", "tournee:read", "rue:read"})
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Rue", mappedBy="tournee")
+     * @Groups({"tournee:read"})
      */
     private $rues;
 

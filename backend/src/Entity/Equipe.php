@@ -6,12 +6,15 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 
 /**
  * @ApiResource(
  *     attributes={
  *        "security"="is_granted('ROLE_USER')",
- *        "normalization_context"={"groups"={"equ_get"}}
+ *        "normalization_context"={"groups"={"equipe:read"}}
  *     },
  *     collectionOperations={
  *         "get",
@@ -24,6 +27,7 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * 
  * @ORM\Entity(repositoryClass="App\Repository\EquipeRepository")
+ * @ApiFilter(NumericFilter::class, properties={"number"})
  */
 class Equipe
 {
@@ -31,16 +35,19 @@ class Equipe
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"equipe:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"equipe:read"})
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Tournee", mappedBy="equipe")
+     * @Groups({"equipe:read", "tournee:read"})
      */
     private $tournees;
 
@@ -49,6 +56,11 @@ class Equipe
      * @ORM\JoinColumn(nullable=false)
      */
     private $etablissement;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $number;
 
     public function __construct()
     {
@@ -111,6 +123,18 @@ class Equipe
     public function setEtablissement(Etablissement $etablissement): self
     {
         $this->etablissement = $etablissement;
+
+        return $this;
+    }
+
+    public function getNumber(): ?int
+    {
+        return $this->number;
+    }
+
+    public function setNumber(int $number): self
+    {
+        $this->number = $number;
 
         return $this;
     }

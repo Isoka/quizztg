@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Game from 'src/components/TimeAttack/Game';
+import QuinteFlushRoyale from 'src/components/Games/QuinteFlushRoyale';
 import {
   increment,
   controlChamp,
@@ -14,6 +14,7 @@ import {
   resetIncrement,
   resetChrono,
   stopTimeAttack,
+  stockRues,
 } from 'src/store/reducer';
 
 const mapStateToProps = (state) => ({
@@ -23,6 +24,8 @@ const mapStateToProps = (state) => ({
   goodAnswers: state.goodAnswers !== undefined ? state.goodAnswers : 0,
   badAnswers: state.badAnswers !== undefined ? state.badAnswers : 0,
   startTime: state.startTime !== undefined ? state.startTime : 0,
+  team: state.team !== undefined ? state.team : 0,
+  rues: state.rues !== undefined ? state.rues : 0,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -62,12 +65,14 @@ const mapDispatchToProps = (dispatch) => ({
   stopTimeAttack: () => {
     dispatch(stopTimeAttack());
   },
+  stockRues: (rues) => {
+    dispatch(stockRues(rues));
+  },
 });
 
-
-const GameContainer = connect(
+const QuinteFlushRoyaleContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Game);
+)(QuinteFlushRoyale);
 
-export default GameContainer;
+export default QuinteFlushRoyaleContainer;

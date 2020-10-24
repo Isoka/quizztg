@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 
 /**
  * @ApiResource(
@@ -22,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     }
  * )
  * 
+ * @ApiFilter(RangeFilter::class, properties={"tournee.name"})
  * @ORM\Entity(repositoryClass="App\Repository\RueRepository")
  */
 class Rue
@@ -30,31 +33,32 @@ class Rue
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"rue:read"})
+     * @Groups({"rue:read", "tournee:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"rue:read", "tournee:read"})
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tournee", inversedBy="rues")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"rue:read"})
+     * @Groups({"rue:read", "tournee:read"})
      */
     private $tournee;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"rue:read"})
+     * @Groups({"rue:read", "tournee:read"})
      */
     private $fullstreetname;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"rue:read"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"rue:read", "tournee:read"})
      */
     private $options;
 

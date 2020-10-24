@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     attributes={
  *        "security"="is_granted('ROLE_USER')",
- *        "normalization_context"={"groups"={"eta_get"}}
+ *        "normalization_context"={"groups"={"etablissement:read"}}
  *     },
  *     collectionOperations={
  *         "get",
@@ -32,25 +32,24 @@ class Etablissement
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"eta_get"})
+     * @Groups({"etablissement:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"eta_get"})
+     * @Groups({"etablissement:read", "equipe:read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"eta_get"})
+     * @Groups({"etablissement:read"})
      */
     private $code_regate;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Equipe", mappedBy="etablissement")
-     * @Groups({"eta_get"})
      */
     private $equipes;
 

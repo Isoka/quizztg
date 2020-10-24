@@ -8,7 +8,7 @@ export default function isConnected() {
     return false;
   }
   if (lsToken) {
-    Axios.get('http://back.quizztg.fr/api/users', {
+    Axios.get('http://back.quizztg.fr/api/equipes', {
       headers: { Authorization: `Bearer ${lsToken}` },
     })
       .catch((error) => {
