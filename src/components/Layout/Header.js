@@ -13,7 +13,7 @@ const Header = (props) => {
   return (
     <header>
       <Link to="/">
-        <img src="src/thirdparty/img/logolp.png" alt="logo" />
+        <img src="/src/thirdparty/img/logolp.png" alt="logo" />
       </Link>
       <Menu>
         <Menu.Item

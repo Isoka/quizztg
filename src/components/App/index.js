@@ -12,7 +12,7 @@ import Header from 'src/containers/Header';
 import Footer from 'src/components/Layout/Footer';
 import Homepage from 'src/containers/Homepage';
 import BestScores from 'src/components/BestScores';
-import TimeAttack from 'src/containers/TimeAttack/TimeAttack';
+import Games from 'src/containers/Games';
 import Entry from 'src/components/Entry';
 
 // == Composant
@@ -31,8 +31,8 @@ const App = () => (
           <Route path="/bestscores">
             <Entry Component={BestScores} />
           </Route>
-          <Route path="/timeattack">
-            <Entry Component={TimeAttack} />
+          <Route path="/game/:type">
+            <Entry Component={Games} />
           </Route>
         </Switch>
       </main>

@@ -1,4 +1,3 @@
-
 // == Initial State
 const initialState = {
   iteration: 0,
@@ -6,10 +5,15 @@ const initialState = {
   goodAnswers: 0,
   badAnswers: [],
   questions: [],
+  team: 0,
+  timeAttackStarted: false,
+  rues: [],
+  answer: '',
 };
 // == Types
 const TOGGLE_LATERAL_MENU = 'TOGGLE_LATERAL_MENU';
 const CONTROLE_CHAMP = 'CONTROLE_CHAMP';
+const RESET_CHAMP = 'RESET_CHAMP';
 const START_CHRONO = 'START_CHRONO';
 const RESET_CHRONO = 'RESET_CHRONO';
 const CHECK_AUTHENTICATE = 'CHECK_AUTHENTICATE';
@@ -25,6 +29,10 @@ const BAD_ANSWER = 'BAD_ANSWER';
 const RESET_BAD_ANSWER = 'RESET_BAD_ANSWER';
 const RELOAD = 'RELOAD';
 const RESET_INCREMENT = 'RESET_INCREMENT';
+const SET_TEAM = 'SET_TEAM';
+const STOCK_RUES = 'STOCK_RUES';
+const RESET_GOOD_ANSWER = 'RESET_GOOD_ANSWER';
+const SET_TOTAL_TIME = 'SET_TOTAL_TIME';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -38,6 +46,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         [action.name]: action.value,
+      };
+    case RESET_CHAMP:
+      return {
+        ...state,
+        [action.name]: '',
       };
     case SET_ERROR:
       return {
@@ -98,6 +111,11 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         goodAnswers: state.goodAnswers + 1,
       };
+    case RESET_GOOD_ANSWER:
+      return {
+        ...state,
+        goodAnswers: 0,
+      };
     case BAD_ANSWER:
       return {
         ...state,
@@ -112,6 +130,21 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         reload: !state.reload,
+      };
+    case SET_TEAM:
+      return {
+        ...state,
+        team: action.team,
+      };
+    case STOCK_RUES:
+      return {
+        ...state,
+        rues: action.rues,
+      };
+    case SET_TOTAL_TIME:
+      return {
+        ...state,
+        totalTime: action.totalTime,
       };
     default:
       return state;
@@ -165,7 +198,7 @@ export function startChrono() {
 export function resetChrono() {
   return {
     type: RESET_CHRONO,
-    startTime: undefined,
+    startTime: 0,
   };
 }
 
@@ -213,6 +246,12 @@ export function setGoodAnswers() {
   };
 }
 
+export function resetGoodAnswers() {
+  return {
+    type: RESET_GOOD_ANSWER,
+  };
+}
+
 export function setBadAnswers(badAnswers) {
   return {
     type: BAD_ANSWER,
@@ -233,8 +272,28 @@ export function reload() {
   };
 }
 
-// == Selectors
+export function setTeam(team) {
+  return {
+    type: SET_TEAM,
+    team,
+  };
+}
 
+export function stockRues(rues) {
+  return {
+    type: STOCK_RUES,
+    rues,
+  };
+}
+
+export function setTotalTime(time) {
+  return {
+    type: SET_TOTAL_TIME,
+    totalTime: time,
+  };
+}
+
+// == Selectors
 
 // == Export
 export default reducer;

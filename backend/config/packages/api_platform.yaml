@@ -8,3 +8,5 @@ api_platform:
     collection:
         pagination:
             enabled: false
+    eager_loading:
+        force_eager: false
