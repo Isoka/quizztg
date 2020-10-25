@@ -15,7 +15,6 @@ import {
   resetChrono,
   stopTimeAttack,
   stockRues,
-  resetChamp,
   resetGoodAnswers,
   setTotalTime,
 } from 'src/store/reducer';
@@ -42,9 +41,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   controlChamp: (name, value) => {
     dispatch(controlChamp(name, value));
-  },
-  resetChamp: (name) => {
-    dispatch(resetChamp(name));
   },
   setBadAnswers: (answer) => {
     dispatch(setBadAnswers(answer));

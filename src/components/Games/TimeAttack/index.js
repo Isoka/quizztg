@@ -1,3 +1,5 @@
+// Import node_modules
+
 import React, { useEffect } from 'react';
 import {
   Loader,
@@ -8,8 +10,11 @@ import {
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
+// Import local
+
 import Rules from 'src/containers/Games/TimeAttack/Rules';
 import './TimeAttack.scss';
+import { nbOfQuestions } from 'src/config/gamesConfig';
 
 const TimeAttack = (props) => {
   const {
@@ -18,7 +23,6 @@ const TimeAttack = (props) => {
     team,
     timeAttackStarted,
     controlChamp,
-    resetChamp,
     answer,
     setGoodAnswers,
     setBadAnswers,
@@ -36,18 +40,24 @@ const TimeAttack = (props) => {
     totalTime,
   } = props;
 
-  const nbOfQuestions = 5;
-
+  /**
+   * Inputs control
+   * @param {object} e - Form event
+   * @param {string} name - Input's name
+   * @param {string} value - Input's value
+   */
   const handleChange = (e, { name, value }) => {
     controlChamp(name, value);
   };
 
+  /**
+   * Handle form submit
+   * @param {object} e - Form event
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     if (iteration < rues.length) {
       if (rues[iteration].tournee.name === parseInt(`52${answer}`, 10)) {
-        // eslint-disable-next-line no-console
-        console.info('[INFO] Bonne réponse!');
         setGoodAnswers();
         controlChamp('answer', '');
       }
@@ -55,28 +65,29 @@ const TimeAttack = (props) => {
         const badAnswerVar = badAnswers;
         badAnswerVar.push(rues[iteration].id);
         setBadAnswers(badAnswerVar);
-        console.info('[INFO] Mauvaise réponse!');
       }
       controlChamp('answer', '');
       increment(iteration);
     }
   };
 
+  /**
+   * Event for restarting game
+   */
   const handleRestartGame = () => {
     const streetsArray = [];
     badAnswers.forEach((item) => {
       streetsArray.push(rues.find((element) => element.id === item));
     });
-    console.log('Restart!');
+
     resetBadAnswers();
     resetIncrement();
     stockRues(streetsArray);
   };
 
-  // const handleCheckGame = () => {
-
-  // };
-
+  /**
+   * Event for ending game
+   */
   const handleEndGame = () => {
     const totalTimestamp = Date.now() - startTime;
     const totalTimeRegistered = new Date(totalTimestamp);
@@ -85,6 +96,10 @@ const TimeAttack = (props) => {
     setTotalTime(totalTimeRegistered);
   };
 
+  /**
+   * Construct HTML response with question params
+   * @param {object} element - Question object
+   */
   const construct = (element) => (
     <>
       <h2>Question {iteration + 1} sur {rues.length}</h2>
@@ -100,17 +115,10 @@ const TimeAttack = (props) => {
     </>
   );
 
-  const handleStartChrono = () => {
-    startChrono();
-    return (
-      <p>C'est parti!</p>
-    );
-  };
-
+  /**
+   * Like it's name, displays rules!
+   */
   const watchRules = () => {
-    // WatchRules permet d'afficher les règles du jeu et de le lancer
-    // Grâce au bouton START
-
     if (rues !== undefined && rues.length === nbOfQuestions) {
       return (
         <>
@@ -128,7 +136,7 @@ const TimeAttack = (props) => {
   };
 
   useEffect(() => {
-    // Réduction du nombre de questions pour le TimeAttack
+    // Questions list reduction for TimeAttack
 
     const streetsArray = [];
 
@@ -151,18 +159,13 @@ const TimeAttack = (props) => {
       stockRues(streetsArray);
     }
 
-    if (iteration === rues.length && badAnswers.length !== 0) {
-      handleRestartGame(badAnswers);
-    }
-    if (
-      timeAttackStarted
-      && startTime !== 0
-      && goodAnswers === nbOfQuestions
-    ) {
-      handleEndGame();
-    }
+    // Events listeners
 
-    if (timeAttackStarted && startTime === 0) handleStartChrono();
+    if (iteration === rues.length && badAnswers.length !== 0) handleRestartGame(badAnswers);
+
+    if (timeAttackStarted && startTime !== 0 && goodAnswers === nbOfQuestions) handleEndGame();
+
+    if (timeAttackStarted && startTime === 0) startChrono();
   });
 
   return (
@@ -181,12 +184,8 @@ const TimeAttack = (props) => {
           <>
             <h3>Bravo! Tu as terminé le contre-la-montre!</h3>
             <p>Ton temps est de
-              {
-                totalTime.getMinutes() !== 0 && ` ${totalTime.getMinutes()} minutes et `
-              }
-              {
-                totalTime.getSeconds() !== 0 && ` ${totalTime.getSeconds()} secondes`
-              }
+              {totalTime.getMinutes() !== 0 && ` ${totalTime.getMinutes()} minutes et `}
+              {totalTime.getSeconds() !== 0 && ` ${totalTime.getSeconds()} secondes`}
             </p>
           </>
         )
@@ -194,6 +193,8 @@ const TimeAttack = (props) => {
     </>
   );
 };
+
+// Checking proptypes
 
 TimeAttack.defaultProps = {
   timeAttackStarted: false,
@@ -209,6 +210,13 @@ TimeAttack.defaultProps = {
   controlChamp: null,
   answer: null,
   badAnswers: [],
+  resetIncrement: null,
+  stopTimeAttack: null,
+  goodAnswers: null,
+  resetGoodAnswers: null,
+  setTotalTime: null,
+  totalTime: null,
+  resetBadAnswers: null,
 };
 
 TimeAttack.propTypes = {
@@ -225,6 +233,13 @@ TimeAttack.propTypes = {
   controlChamp: PropTypes.func,
   answer: PropTypes.string,
   badAnswers: PropTypes.array,
+  resetIncrement: PropTypes.func,
+  stopTimeAttack: PropTypes.func,
+  goodAnswers: PropTypes.number,
+  resetGoodAnswers: PropTypes.func,
+  setTotalTime: PropTypes.func,
+  totalTime: PropTypes.string,
+  resetBadAnswers: PropTypes.func,
 };
 
 export default TimeAttack;

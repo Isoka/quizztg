@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Button, Message } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 const Rules = (props) => {
   const { startTimeAttack } = props;
@@ -39,13 +40,21 @@ const Rules = (props) => {
           le chargement du jeu sera terminé, pas de panique!)
         </p>
         <Message error>
-          A tout moment, si vous souhaitez arrêter le jeu ou revenir à la page d'accueil,
+          A tout moment, si vous souhaitez arrêter le jeu et/ou revenir à la page d'accueil,
           cliquez sur le logo "La Poste"!
         </Message>
       </div>
       <Button size="massive" color="green" onClick={handleStartGame}>START!</Button>
     </Container>
   );
+};
+
+Rules.defaultProps = {
+  startTimeAttack: null,
+};
+
+Rules.propTypes = {
+  startTimeAttack: PropTypes.func,
 };
 
 export default Rules;
