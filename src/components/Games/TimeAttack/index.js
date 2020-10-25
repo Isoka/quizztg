@@ -41,7 +41,7 @@ const TimeAttack = (props) => {
   } = props;
 
   /**
-   * Inputs control
+   * Form inputs control
    * @param {object} e - Form event
    * @param {string} name - Input's name
    * @param {string} value - Input's value
