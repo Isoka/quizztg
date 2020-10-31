@@ -25,9 +25,9 @@ class Games extends React.Component {
 
   componentDidMount() {
     // Data initialization
-    const { stockRues, team } = this.props;
+    const { stockRues, team, type } = this.props;
 
-    if (team !== 0) {
+    if (team !== 0 && type !== 'examen') {
       const equipeUrl = `${apiUrl}/equipes?number=${team}`;
 
       Axios.get(equipeUrl, {
@@ -51,7 +51,6 @@ class Games extends React.Component {
           })
             .then((ruesData) => {
               stockRues(ruesData.data['hydra:member']);
-              console.info('[INFO] Chargement des rues par équipe terminé');
             })
             .catch((error) => {
               // eslint-disable-next-line no-console
@@ -72,7 +71,6 @@ class Games extends React.Component {
       })
         .then((response) => {
           stockRues(response.data['hydra:member']);
-          console.info('[INFO] Chargement de toutes les rues terminé');
         })
         .catch((error) => {
           // eslint-disable-next-line no-console

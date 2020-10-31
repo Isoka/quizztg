@@ -35,6 +35,8 @@ const Login = (props) => {
         setTimeout(() => {
           deleteError();
         }, 6000);
+        updateChamp('email', null);
+        updateChamp('password', null);
         history.push('/a');
         history.push('/');
       })
@@ -48,6 +50,8 @@ const Login = (props) => {
           setTimeout(() => {
             deleteError();
           }, 6000);
+          updateChamp('email', null);
+          updateChamp('password', null);
         }
         else if (error.response !== undefined && error.response.status === 500) {
           setError(

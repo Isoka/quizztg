@@ -2,6 +2,8 @@ import React from 'react';
 import { Container, Button, Message } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
+import { nbOfAuthorizedErrors } from 'src/config/gamesConfig';
+
 const Rules = (props) => {
   const { startGame } = props;
 
@@ -11,37 +13,30 @@ const Rules = (props) => {
 
   return (
     <Container className="test">
-      <p>Tu as choisi le contre la montre, tu dois donc en connaître les règles:</p>
+      <p>Tu as choisi l'examen blanc, tu dois donc en connaître les règles:</p>
       <ul className="rule-list">
-        <li>Le temps est calculé, mais pas limité</li>
+        <li>Tu as 20 minutes, pas une seconde de plus!</li>
         <li>
-          Chaque question ayant une mauvaise réponse est passée,
-          mais reviendra inexorablement plus tard
+          Toutes les réponses sont comptées, bonnes et mauvaises
+        </li>
+        <li>Si tu n'a pas le temps de finir, le jeu s'arrêtera automatiquement!</li>
+        <li>
+          Si tu fais plus de {nbOfAuthorizedErrors} fautes,
+          tu perds! (Mais tu ne le saura qu'après avoir fini!)
         </li>
         <li>
-          En rapport avec le point précédent, tu ne peut terminer
-          le contre la montre qu'au moment ou tu aura répondu aux 20 questions
-        </li>
-        <li>
-          Le temps sera enregistré à la fin du jeu,
-          puis affiché dans la page /bestscores si tu a fait un temps record
-        </li>
-        <li>
-          Les tricheries (modification du timer par exemple)
-          seront TOUJOURS détectées et supprimées,
-          inutile donc de chercher à répondre aux 20 questions en 2 secondes ;)
+          Les tricheries (modification des réponses par exemple)
+          seront TOUJOURS détectées et supprimées
         </li>
       </ul>
       <div className="ready">
         <p className="ready">
           Si tu est prêt et que tu as bien révisé ton TG,
           tu peux cliquer sur le bouton ci-dessous pour commencer la partie! <br />
-          (Le chrono ne partira qu'au moment ou
-          le chargement du jeu sera terminé, pas de panique!)
         </p>
         <Message error>
           A tout moment, si vous souhaitez arrêter le jeu et/ou revenir à la page d'accueil,
-          cliquez sur le logo "La Poste"!
+          cliquez sur le logo "La Poste" ou le gros bouton "STOPPER"!
         </Message>
       </div>
       <Button size="massive" color="green" onClick={handleStartGame}>START!</Button>

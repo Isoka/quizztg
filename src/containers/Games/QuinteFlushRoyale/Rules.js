@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Rules from 'src/components/Games/TimeAttack/Rules';
+import Rules from 'src/components/Games/QuinteFlushRoyale/Rules';
 import {
   startGame,
 } from 'src/store/reducer';

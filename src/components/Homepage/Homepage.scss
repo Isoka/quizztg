@@ -2,10 +2,27 @@
   margin-top: 50px;
 }
 
-main .ui.three.cards > .card {
+main .ui.card {
   padding: 25px;
+  height: 100%;
 }
 
 main .ui.card .icon {
   margin: 0 auto;
+}
+
+body #root #app {
+  & .ui.card {
+    margin: 0 auto;
+    & p {
+      text-align: left;
+    }
+    & a:hover {
+      color: #962626;
+    }
+  }
+
+  & .ui.selection.dropdown {
+    margin: 15px;
+  }
 }

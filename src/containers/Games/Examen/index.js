@@ -13,7 +13,7 @@ import {
   reload,
   resetIncrement,
   resetChrono,
-  stopTimeAttack,
+  stopGame,
   stockRues,
 } from 'src/store/reducer';
 
@@ -26,6 +26,7 @@ const mapStateToProps = (state) => ({
   startTime: state.startTime !== undefined ? state.startTime : 0,
   team: state.team !== undefined ? state.team : 0,
   rues: state.rues !== undefined ? state.rues : 0,
+  gameStarted: state.gameStarted !== undefined ? state.gameStarted : false,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -62,8 +63,8 @@ const mapDispatchToProps = (dispatch) => ({
   reload: () => {
     dispatch(reload());
   },
-  stopTimeAttack: () => {
-    dispatch(stopTimeAttack());
+  stopGame: () => {
+    dispatch(stopGame());
   },
   stockRues: (rues) => {
     dispatch(stockRues(rues));

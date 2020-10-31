@@ -6,9 +6,10 @@ const initialState = {
   badAnswers: [],
   questions: [],
   team: 0,
-  timeAttackStarted: false,
+  gameStarted: false,
   rues: [],
   answer: '',
+  startTime: 0,
 };
 // == Types
 const TOGGLE_LATERAL_MENU = 'TOGGLE_LATERAL_MENU';
@@ -19,8 +20,8 @@ const RESET_CHRONO = 'RESET_CHRONO';
 const CHECK_AUTHENTICATE = 'CHECK_AUTHENTICATE';
 const SET_ERROR = 'SET_ERROR';
 const DELETE_ERROR = 'DELETE_ERROR';
-const TIME_ATTACK_START = 'TIME_ATTACK_START';
-const TIME_ATTACK_STOP = 'TIME_ATTACK_STOP';
+const GAME_START = 'GAME_START';
+const GAME_STOP = 'GAME_STOP';
 const SET_QUESTIONS = 'SET_QUESTIONS';
 const RESET_QUESTIONS = 'RESET_QUESTIONS';
 const INCREMENT = 'INCREMENT';
@@ -76,15 +77,15 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         startTime: action.startTime,
       };
-    case TIME_ATTACK_START:
+    case GAME_START:
       return {
         ...state,
-        timeAttackStarted: true,
+        gameStarted: true,
       };
-    case TIME_ATTACK_STOP:
+    case GAME_STOP:
       return {
         ...state,
-        timeAttackStarted: false,
+        gameStarted: false,
       };
     case SET_QUESTIONS:
       return {
@@ -202,15 +203,15 @@ export function resetChrono() {
   };
 }
 
-export function startTimeAttack() {
+export function startGame() {
   return {
-    type: TIME_ATTACK_START,
+    type: GAME_START,
   };
 }
 
-export function stopTimeAttack() {
+export function stopGame() {
   return {
-    type: TIME_ATTACK_STOP,
+    type: GAME_STOP,
   };
 }
 
