@@ -12,16 +12,17 @@ import PropTypes from 'prop-types';
 
 // Import local
 
-import Rules from 'src/containers/Games/TimeAttack/Rules';
-import './TimeAttack.scss';
 import { nbOfQuestions } from 'src/config/gamesConfig';
+import Rules from 'src/containers/Games/TimeAttack/Rules';
+import CancelModal from 'src/components/Games/TimeAttack/CancelModal';
+import './TimeAttack.scss';
 
 const TimeAttack = (props) => {
   const {
     rues,
     stockRues,
     team,
-    timeAttackStarted,
+    gameStarted,
     controlChamp,
     answer,
     setGoodAnswers,
@@ -33,7 +34,7 @@ const TimeAttack = (props) => {
     increment,
     iteration,
     resetIncrement,
-    stopTimeAttack,
+    stopGame,
     goodAnswers,
     resetGoodAnswers,
     setTotalTime,
@@ -92,7 +93,7 @@ const TimeAttack = (props) => {
     const totalTimestamp = Date.now() - startTime;
     const totalTimeRegistered = new Date(totalTimestamp);
     resetGoodAnswers();
-    stopTimeAttack();
+    stopGame();
     setTotalTime(totalTimeRegistered);
   };
 
@@ -102,6 +103,7 @@ const TimeAttack = (props) => {
    */
   const construct = (element) => (
     <>
+      <CancelModal />
       <h2>Question {iteration + 1} sur {rues.length}</h2>
       <Form onSubmit={handleSubmit}>
         <Header>{element.fullstreetname}{(element.options !== null) && ` N° ${element.options}`}</Header>
@@ -163,21 +165,21 @@ const TimeAttack = (props) => {
 
     if (iteration === rues.length && badAnswers.length !== 0) handleRestartGame(badAnswers);
 
-    if (timeAttackStarted && startTime !== 0 && goodAnswers === nbOfQuestions) handleEndGame();
+    if (gameStarted && startTime !== 0 && goodAnswers === nbOfQuestions) handleEndGame();
 
-    if (timeAttackStarted && startTime === 0) startChrono();
+    if (gameStarted && startTime === 0) startChrono();
   });
 
   return (
     <>
-      {(timeAttackStarted === false && startTime === 0) && watchRules()}
+      {(gameStarted === false && startTime === 0) && watchRules()}
       {
-        (timeAttackStarted && startTime !== 0 && rues.length !== iteration)
+        (gameStarted && startTime !== 0 && rues.length !== iteration)
           && construct(rues[iteration])
       }
       {
       (
-        timeAttackStarted === false
+        gameStarted === false
         && startTime !== 0
       )
         && (
@@ -197,7 +199,7 @@ const TimeAttack = (props) => {
 // Checking proptypes
 
 TimeAttack.defaultProps = {
-  timeAttackStarted: false,
+  gameStarted: false,
   rues: [],
   stockRues: null,
   team: 0,
@@ -211,7 +213,7 @@ TimeAttack.defaultProps = {
   answer: null,
   badAnswers: [],
   resetIncrement: null,
-  stopTimeAttack: null,
+  stopGame: null,
   goodAnswers: null,
   resetGoodAnswers: null,
   setTotalTime: null,
@@ -220,7 +222,7 @@ TimeAttack.defaultProps = {
 };
 
 TimeAttack.propTypes = {
-  timeAttackStarted: PropTypes.bool,
+  gameStarted: PropTypes.bool,
   rues: PropTypes.array,
   stockRues: PropTypes.func,
   team: PropTypes.number,
@@ -234,11 +236,14 @@ TimeAttack.propTypes = {
   answer: PropTypes.string,
   badAnswers: PropTypes.array,
   resetIncrement: PropTypes.func,
-  stopTimeAttack: PropTypes.func,
+  stopGame: PropTypes.func,
   goodAnswers: PropTypes.number,
   resetGoodAnswers: PropTypes.func,
   setTotalTime: PropTypes.func,
-  totalTime: PropTypes.string,
+  totalTime: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   resetBadAnswers: PropTypes.func,
 };
 

@@ -5,7 +5,7 @@ import Homepage from 'src/components/Homepage';
 import {
   setTeam,
   stockRues,
-  stopTimeAttack,
+  stopGame,
   resetChrono,
   resetQuestions,
   resetGoodAnswers,
@@ -16,7 +16,6 @@ import {
 const mapStateToProps = (state) => ({
   team: state.team !== undefined ? state.team : false,
   rues: state.rues !== undefined ? state.rues : [],
-  timeAttackStarted: state.timeAttackStarted !== undefined ? state.timeAttackStarted : false,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -26,8 +25,8 @@ const mapDispatchToProps = (dispatch) => ({
   stockRues: (rues) => {
     dispatch(stockRues(rues));
   },
-  stopTimeAttack: () => {
-    dispatch(stopTimeAttack());
+  stopGame: () => {
+    dispatch(stopGame());
   },
   resetChrono: () => {
     dispatch(resetChrono());

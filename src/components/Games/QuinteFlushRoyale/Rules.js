@@ -11,37 +11,29 @@ const Rules = (props) => {
 
   return (
     <Container className="test">
-      <p>Tu as choisi le contre la montre, tu dois donc en connaître les règles:</p>
+      <p>Tu as choisi la Quinte Flush Royale, tu dois donc en connaître les règles:</p>
       <ul className="rule-list">
-        <li>Le temps est calculé, mais pas limité</li>
+        <li>Le temps n'est pas compté</li>
         <li>
-          Chaque question ayant une mauvaise réponse est passée,
-          mais reviendra inexorablement plus tard
+          Toutes les réponses sont comptées, bonnes et mauvaises
         </li>
         <li>
-          En rapport avec le point précédent, tu ne peut terminer
-          le contre la montre qu'au moment ou tu aura répondu aux 20 questions
+          A la fin du jeu, les bonnes et mauvaises réponses te seront listées,
+          cela représenteras ton score
         </li>
         <li>
-          Le temps sera enregistré à la fin du jeu,
-          puis affiché dans la page /bestscores si tu a fait un temps record
-        </li>
-        <li>
-          Les tricheries (modification du timer par exemple)
-          seront TOUJOURS détectées et supprimées,
-          inutile donc de chercher à répondre aux 20 questions en 2 secondes ;)
+          Les tricheries (modification des réponses par exemple)
+          seront TOUJOURS détectées et supprimées
         </li>
       </ul>
       <div className="ready">
         <p className="ready">
           Si tu est prêt et que tu as bien révisé ton TG,
           tu peux cliquer sur le bouton ci-dessous pour commencer la partie! <br />
-          (Le chrono ne partira qu'au moment ou
-          le chargement du jeu sera terminé, pas de panique!)
         </p>
         <Message error>
           A tout moment, si vous souhaitez arrêter le jeu et/ou revenir à la page d'accueil,
-          cliquez sur le logo "La Poste"!
+          cliquez sur le logo "La Poste" ou le gros bouton "STOPPER"!
         </Message>
       </div>
       <Button size="massive" color="green" onClick={handleStartGame}>START!</Button>

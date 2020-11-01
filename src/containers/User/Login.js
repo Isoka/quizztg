@@ -9,7 +9,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateChamp: (name, value) => {
+  controlChamp: (name, value) => {
     dispatch(controlChamp(name, value));
   },
   setError: (type, MsgHeader, message) => {

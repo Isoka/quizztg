@@ -1,0 +1,23 @@
+
+.ui {
+  &.floating {
+    &.toRight {
+      position: absolute;
+      z-index: 100;
+      top: -1em;
+      left: 100%;
+      margin: 0 0 0 -1.5em !important;
+    }
+    &.toLeft {
+      position: absolute;
+      z-index: 100;
+      top: -1em;
+      left: -5%;
+      margin: 0 -1.5em 0 0 !important;
+    }
+  }
+}
+
+.ui.input.answer {
+  width: 4em !important;
+}

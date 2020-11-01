@@ -13,7 +13,7 @@ import {
   reload,
   resetIncrement,
   resetChrono,
-  stopTimeAttack,
+  stopGame,
   stockRues,
   resetGoodAnswers,
   setTotalTime,
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
   totalTime: state.totalTime !== undefined ? state.totalTime : 0,
   team: state.team !== undefined ? state.team : 0,
   rues: state.rues !== undefined ? state.rues : 0,
-  timeAttackStarted: state.timeAttackStarted !== undefined ? state.timeAttackStarted : false,
+  gameStarted: state.gameStarted !== undefined ? state.gameStarted : false,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(reload());
   },
   stopTimeAttack: () => {
-    dispatch(stopTimeAttack());
+    dispatch(stopGame());
   },
   stockRues: (rues) => {
     dispatch(stockRues(rues));
