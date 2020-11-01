@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // Import node_modules
 
 import React, { useEffect } from 'react';
@@ -7,16 +8,17 @@ import {
   Header,
   Input,
   Button,
-  Label,
-  Menu,
-  Icon,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import Countdown from 'react-countdown-now';
 
 // Import local
 
+import { nbOfQuestionsExamen, totalTimeExamen } from 'src/config/gamesConfig';
+
 import Rules from 'src/containers/Games/Examen/Rules';
 import CancelModal from 'src/components/Games/CancelModal';
+import Chronoended from './Chronoended';
 import './examen.scss';
 
 const Examen = (props) => {
@@ -34,7 +36,21 @@ const Examen = (props) => {
     goodAnswers,
     startTime,
     startChrono,
+    stockRues,
   } = props;
+
+  const countdownRenderer = ({ minutes, seconds, completed }) => {
+    if (!completed) {
+      return (
+        <>
+          <p>Temps restant</p>
+          <p>{minutes}:{seconds}</p>
+        </>
+      );
+    }
+
+    return null;
+  };
 
   /**
    * Form inputs control
@@ -71,6 +87,7 @@ const Examen = (props) => {
    * Event for ending game
    */
   const handleEndGame = () => {
+    console.info(`[INFO] {${goodAnswers}+${badAnswers.length}}`);
     stopGame();
   };
 
@@ -81,20 +98,12 @@ const Examen = (props) => {
   const construct = (element) => (
     <>
       <CancelModal />
-      <Menu compact>
-        <Menu.Item as="a">
-          <Icon name="check" /> Bonnes réponses
-          <Label color="teal" floating className="toLeft">
-            {goodAnswers}
-          </Label>
-        </Menu.Item>
-        <Menu.Item as="a">
-          Mauvaises réponses <Icon name="delete" />
-          <Label color="red" floating className="toRight">
-            {badAnswers.length}
-          </Label>
-        </Menu.Item>
-      </Menu>
+      <Countdown
+        date={startTime + totalTimeExamen}
+        renderer={countdownRenderer}
+        onComplete={handleEndGame}
+      />
+      {goodAnswers + badAnswers.length}
       <h2>Question {iteration + 1} sur {rues.length}</h2>
       <Form onSubmit={handleSubmit}>
         <Header>{element.fullstreetname}{(element.options !== null) && ` N° ${element.options}`}</Header>
@@ -136,14 +145,47 @@ const Examen = (props) => {
   };
 
   useEffect(() => {
-    // Events listeners
+    /**
+     * Questions list reduction for TimeAttack
+     */
 
+    const streetsArray = [];
+
+    if (rues !== null && rues.length > nbOfQuestionsExamen) {
+      const streetsSelected = [];
+
+      const selectRandomStreet = (nbOfStreets) => {
+        while (streetsSelected.length < nbOfQuestionsExamen) {
+          const selected = Math.ceil(Math.random() * (nbOfStreets - 1));
+
+          if (!streetsSelected.includes(selected)) {
+            streetsSelected.push(selected);
+          }
+        }
+      };
+      selectRandomStreet(rues.length);
+      streetsSelected.forEach((item) => {
+        streetsArray.push(rues[item]);
+      });
+      stockRues(streetsArray);
+    }
+
+    /**
+     * Event listeners
+     */
+
+    /**
+     * End of game detection
+     */
     if (
       gameStarted
       && startTime !== 0
-      && (goodAnswers + badAnswers.length) === rues.length
+      && goodAnswers + badAnswers.length === rues.length
     ) handleEndGame();
 
+    /**
+     * Start chrono
+     */
     if (
       gameStarted
       && startTime === 0
@@ -162,6 +204,7 @@ const Examen = (props) => {
       {
         gameStarted
         && startTime !== 0
+        && goodAnswers + badAnswers.length !== rues.length
           && construct(rues[iteration])
       }
       {
@@ -172,8 +215,18 @@ const Examen = (props) => {
       )
         && (
           <>
-            <h3>Bravo! Tu as terminé!</h3>
+            <Chronoended nbOfErrors={badAnswers.length} />
           </>
+        )
+      }
+      {
+      (
+        !gameStarted
+        && startTime !== 0
+        && rues.length !== iteration
+      )
+        && (
+          <Chronoended chrono />
         )
       }
     </>
@@ -196,6 +249,7 @@ Examen.defaultProps = {
   goodAnswers: null,
   startChrono: null,
   startTime: 0,
+  stockRues: undefined,
 };
 
 Examen.propTypes = {
@@ -212,6 +266,7 @@ Examen.propTypes = {
   goodAnswers: PropTypes.number,
   startChrono: PropTypes.func,
   startTime: PropTypes.number,
+  stockRues: PropTypes.func,
 };
 
 export default Examen;

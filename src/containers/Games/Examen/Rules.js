@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Rules from 'src/components/Games/Examen/Rules';
 import {
   startGame,
+  startChrono,
 } from 'src/store/reducer';
 
 const mapStateToProps = (state) => ({
@@ -12,6 +13,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   startGame: () => {
     dispatch(startGame());
+  },
+  startChrono: () => {
+    dispatch(startChrono());
   },
 });
 

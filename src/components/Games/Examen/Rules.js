@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import { nbOfAuthorizedErrors } from 'src/config/gamesConfig';
 
 const Rules = (props) => {
-  const { startGame } = props;
+  const { startGame, startChrono } = props;
 
   function handleStartGame() {
     startGame();
+    startChrono();
   }
 
   return (

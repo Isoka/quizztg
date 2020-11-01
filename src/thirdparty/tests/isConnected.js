@@ -1,10 +1,10 @@
 import Axios from 'axios';
 
-export default function isConnected() {
+function isConnected() {
   const lsToken = sessionStorage.getItem('token');
 
   if (lsToken === null || lsToken === undefined) {
-    console.info('[isConnected] Token is null or undefined');
+    console.info('[User Connection] Token is null or undefined');
     return false;
   }
   if (lsToken) {
@@ -13,14 +13,16 @@ export default function isConnected() {
     })
       .catch((error) => {
         sessionStorage.removeItem('token');
-        console.error(`[isConnected] Error: ${error}`);
+        console.error(`[User Connection] Error: ${error}`);
         return false;
       })
       .then(() => {
-        console.info('[isConnected] Token doesn\'t need to be refreshed');
+        console.info('[User Connection] Token doesn\'t need to be refreshed');
         return true;
       });
   }
 
   return true;
 }
+
+export default isConnected;

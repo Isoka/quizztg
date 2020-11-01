@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Form, Button } from 'semantic-ui-react';
 import Axios from 'axios';
 import { useHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 const Login = (props) => {
   const history = useHistory();
@@ -10,12 +11,12 @@ const Login = (props) => {
     password,
     setError,
     deleteError,
-    updateChamp,
+    controlChamp,
   } = props;
 
   function handleChange(e, { name, value }) {
     e.preventDefault();
-    updateChamp(name, value);
+    controlChamp(name, value);
   }
 
   function handleSubmit(e) {
@@ -35,9 +36,8 @@ const Login = (props) => {
         setTimeout(() => {
           deleteError();
         }, 6000);
-        updateChamp('email', null);
-        updateChamp('password', null);
-        history.push('/a');
+        controlChamp('email', null);
+        controlChamp('password', null);
         history.push('/');
       })
       .catch((error) => {
@@ -50,8 +50,8 @@ const Login = (props) => {
           setTimeout(() => {
             deleteError();
           }, 6000);
-          updateChamp('email', null);
-          updateChamp('password', null);
+          controlChamp('email', null);
+          controlChamp('password', null);
         }
         else if (error.response !== undefined && error.response.status === 500) {
           setError(
@@ -77,6 +77,21 @@ const Login = (props) => {
       </Form>
     </Container>
   );
+};
+
+Login.defaultProps = {
+  email: null,
+  password: null,
+  setError: null,
+  deleteError: null,
+  controlChamp: null,
+};
+Login.propTypes = {
+  email: PropTypes.string,
+  password: PropTypes.string,
+  setError: PropTypes.func,
+  deleteError: PropTypes.func,
+  controlChamp: PropTypes.func,
 };
 
 export default Login;
